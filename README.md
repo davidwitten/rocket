@@ -29,3 +29,8 @@ Opinions
 "This language is nasty"- Everyone
 
 "I should use this instead of Python"- Arman S.
+
+Credits
+-------
+
+Created by: Noah K, and David W
