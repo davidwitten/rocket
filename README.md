@@ -6,23 +6,23 @@ It is changing the world one program at a time.
 
 Syntax
 --------
-! : output
-? : input
-@ : load (with variable) (_variable to denote list)
+      ! : output
+      ? : input
+      @ : load (with variable) (_variable to denote list)
 
-+ : addition
-- : subtraction
-* : multiplication
-/ : division
-% : modulus
-^ : exponentiation
+      + : addition
+      - : subtraction
+      * : multiplication
+      / : division
+      % : modulus
+      ^ : exponentiation
 
-$ : while-loop
-~ : if-statement
-
-LIST:
-& : add element
-| : sorted list
+      $ : while-loop
+      ~ : if-statement
+      
+      LIST:
+      & : add element
+      | : sorted list
 
 Opinions
 --------
