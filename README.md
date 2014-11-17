@@ -33,4 +33,6 @@ Opinions
 Credits
 -------
 
-Created by: Noah K, and David W
+Created by: 
+* Noah K @noahbkim
+* David W @dwizard
