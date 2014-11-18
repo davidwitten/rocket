@@ -43,7 +43,10 @@ def interpret(line):
         if not(themain):
             print(eval(line[1:], Local))
         else:
-            print(' '.join( (eval(line[1:],Local).split() ) ) )
+            if '[' in line:
+                print(' '.join(eval(line[1:],Local).split() ) )
+            else:
+                print(' '.join([str(i) for i in eval(line[1:],Local)]))
     elif line.startswith("?"):
         Local[line[1]] = eval(input("?%s " % line[1]))
     elif line.startswith("@"):
@@ -112,21 +115,14 @@ def main(script):
 ### 
 
 fibonacci = '''
-@a;
-=0;
-@b;
-=1;
-!b;
-@a;
+@_a;=[1,1];
 
-$<20000:;
-
-@c;=b+a;
-@a;=b;
-@b;=c;
-!b;
-
+$[-1]<20000:;
+@b;=0;+_a[-1];+_a[-2];
+@_a;&b;
 END;
+
+!_a;
 '''
 
 TestIf = """
@@ -143,13 +139,15 @@ TestMapping= '''
 !_a;'''
 
 TestAppend = '''
+@b;
+=32;
 @_a;
 =[1,2,3,4,5];
-&3;
+&b;
 &[1,2];
 |;
 =15 [0];
-!_a[0];
+!_a;
 '''
 
 TestSort = '''
@@ -162,4 +160,4 @@ TestSort = '''
 script = '''
 '''
 
-main(TestAppend)
+main(fibonacci)
