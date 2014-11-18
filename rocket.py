@@ -23,6 +23,7 @@ $ : while-loop
 LIST:
 & : add element
 | : sorted list
+[n] : index of list
 """
 
 Local,Lists = {v: 0 for v in string.ascii_lowercase},{'_' + v:[] for v in string.ascii_lowercase}
@@ -39,10 +40,10 @@ def interpret(line):
     if not(themain):
         line = line.replace('^','**')
     if line.startswith("!"):
-        if line[1] != '_':
+        if not(themain):
             print(eval(line[1:], Local))
         else:
-            print(' '.join([str(i) for i in eval(line[1:],Local)]))
+            print(' '.join( (eval(line[1:],Local).split() ) ) )
     elif line.startswith("?"):
         Local[line[1]] = eval(input("?%s " % line[1]))
     elif line.startswith("@"):
@@ -50,11 +51,16 @@ def interpret(line):
     elif line.startswith("~"):
         if eval(str(Local[current]) + line[1:line.index(':')]):
             interpret(line[line.index(":") + 1:])
+
     elif line.startswith("="):
         assert current
         if not(themain) and '[' in line:#non-list
             raise TypeError("Integral variable name must have integral value")
-        Local[current] = eval(line[1:], Local)
+        if ('[' in line.split()[-1]) and len(line.split()) != 1:
+            n = ''.join([i for i in line.split()[-1] if i not in '[]'])
+            Local[current][eval(n)] = line.split()[0][1:] #code would look like "=5 [0]"
+        else:
+             Local[current] = eval(line[1:], Local)
     elif line.startswith("&"):
         assert current
         if themain:
@@ -141,7 +147,9 @@ TestAppend = '''
 =[1,2,3,4,5];
 &3;
 &[1,2];
-!_a;
+|;
+=15 [0];
+!_a[0];
 '''
 
 TestSort = '''
@@ -154,4 +162,4 @@ TestSort = '''
 script = '''
 '''
 
-main(script)
+main(TestAppend)
