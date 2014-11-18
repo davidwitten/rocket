@@ -1,0 +1,3 @@
+number a = 1.0;
+string b = "Hello, world!";
+list c = [a, b];
