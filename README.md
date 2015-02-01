@@ -15,6 +15,7 @@ Comments
 Input and Output
 	
 	\<a-zA-Z>  # Outputs variable to stream
+	.b         # Reference command line argument at index b
 	
 Literals
 	
@@ -28,10 +29,10 @@ Variables
 
 Identity Operations
 
-	<a-zA-Z>:expression  # Set number or list
-	<a-zA-Z>             # Get number or list 
-	A.b:expression       # Set list element at index b
-	A.b                  # Get list element at index b
+	<a-zA-Z>:<expression>  # Set number or list to expression
+	<a-zA-Z>               # Get number or list 
+	A.b:<expression>       # Set list element at index b to expression
+	A.b                    # Get list element at index b
 
 Number Operations
 
