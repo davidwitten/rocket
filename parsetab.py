@@ -5,9 +5,9 @@ _tabversion = '3.2'
 
 _lr_method = 'LALR'
 
-_lr_signature = b'\xf1t*\x8a\\\xa8\xae\xcc4M\xfb\xab\x00m\x9d\x81'
+_lr_signature = b'\x0b\xb7YN\x0f\xc6!\x9beN\x02\x91\xdeP\x9d\xd0'
     
-_lr_action_items = {'$end':([1,4,9,11,12,13,14,15,],[0,-2,-1,-4,-5,-6,-7,-3,]),'PLUS':([1,4,9,10,11,12,13,14,15,],[5,-2,-1,5,-4,-5,-6,-7,-3,]),'RPAREN':([4,9,10,11,12,13,14,15,],[-2,-1,15,-4,-5,-6,-7,-3,]),'TIMES':([1,4,9,10,11,12,13,14,15,],[7,-2,-1,7,7,7,-6,-7,-3,]),'DIVIDE':([1,4,9,10,11,12,13,14,15,],[8,-2,-1,8,8,8,-6,-7,-3,]),'MINUS':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,],[2,6,2,2,-2,2,2,2,2,-1,6,-4,-5,-6,-7,-3,]),'LPAREN':([0,2,3,5,6,7,8,],[3,3,3,3,3,3,3,]),'NUMBER':([0,2,3,5,6,7,8,],[4,4,4,4,4,4,4,]),}
+_lr_action_items = {'DIVIDE':([1,4,5,6,11,12,13,14,15,],[-2,10,10,-1,-3,-6,10,10,-7,]),'RPAREN':([1,5,6,11,12,13,14,15,],[-2,11,-1,-3,-6,-5,-4,-7,]),'TIMES':([1,4,5,6,11,12,13,14,15,],[-2,7,7,-1,-3,-6,7,7,-7,]),'NUMBER':([0,2,3,7,8,9,10,],[1,1,1,1,1,1,1,]),'$end':([1,4,6,11,12,13,14,15,],[-2,0,-1,-3,-6,-5,-4,-7,]),'MINUS':([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,],[3,-2,3,3,8,8,-1,3,3,3,3,-3,-6,-5,-4,-7,]),'PLUS':([1,4,5,6,11,12,13,14,15,],[-2,9,9,-1,-3,-6,-5,-4,-7,]),'LPAREN':([0,2,3,7,8,9,10,],[2,2,2,2,2,2,2,]),}
 
 _lr_action = { }
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'expression':([0,2,3,5,6,7,8,],[1,9,10,11,12,13,14,]),}
+_lr_goto_items = {'expression':([0,2,3,7,8,9,10,],[4,5,6,12,13,14,15,]),}
 
 _lr_goto = { }
 for _k, _v in _lr_goto_items.items():
@@ -33,5 +33,4 @@ _lr_productions = [
   ('expression -> expression MINUS expression','expression',3,'p_expression','/Users/Noah/Repositories/rocket/rocketyacc.py',24),
   ('expression -> expression TIMES expression','expression',3,'p_expression','/Users/Noah/Repositories/rocket/rocketyacc.py',25),
   ('expression -> expression DIVIDE expression','expression',3,'p_expression','/Users/Noah/Repositories/rocket/rocketyacc.py',26),
-  ('statement -> VARIABLE COLON expression','statement',3,'p_assignment','/Users/Noah/Repositories/rocket/rocketyacc.py',39),
 ]

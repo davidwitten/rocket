@@ -9,7 +9,7 @@ from ply import yacc
 precedence = (
     ("left", "PLUS", "MINUS"),
     ("left", "TIMES", "DIVIDE"),
-    #("left", "POWER"),
+    ("left", "POWER"),
     ("right", "UMINUS"),
 )
 
@@ -34,7 +34,3 @@ def p_expression(p):
 
 def p_error(p):
     print("error", p)
-    
-def p_assignment(p):
-    """statement : VARIABLE COLON expression"""
-    p[0] = ("assignment", p[1], p[3])
