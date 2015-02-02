@@ -3,6 +3,10 @@
 
 # Import
 import fractions
+from rocketlex import *
+
+# Namespace
+namespace = {}
 
 # Main
 precedence = (
@@ -30,6 +34,18 @@ def p_expression(p):
     elif p[2] == "*": p[0] = p[1] * p[3]
     elif p[2] == "/": p[0] = p[1] / p[3]
     elif p[2] == "^": p[0] = p[1] ** p[3]
+
+def p_statement_assignment(p):
+    """statement : assignment"""
+    pass
+
+def p_statement_expression(p):
+    """statement : expression"""
+    p[0] = p[1]
+
+def p_assignment(p):
+    """assignment : VARIABLE COLON expression"""
+    namespace[p[1]] = p[3]
 
 def p_error(p):
     print("error", p)
