@@ -15,7 +15,7 @@ Comments
 Input and Output
 	
 	\<a-zA-Z>  # Outputs variable to stream
-	.b         # Reference command line argument at index b
+	           # Starting variables can be initialized on program execution
 	
 Literals
 	
