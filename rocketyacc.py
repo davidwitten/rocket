@@ -3,20 +3,20 @@
 
 # Import
 import fractions
-from ply import yacc
 
 # Main
 precedence = (
     ("left", "PLUS", "MINUS"),
     ("left", "TIMES", "DIVIDE"),
+    ("right", "NEGATE"),
     ("left", "POWER"),
-    ("right", "UMINUS"),
 )
 
 def p_expression(p):
     """expression : NUMBER
-                  | MINUS NUMBER %prec UMINUS
                   | LPAREN expression RPAREN
+                  | expression POWER expression
+                  | MINUS expression %prec NEGATE
                   | expression PLUS expression
                   | expression MINUS expression
                   | expression TIMES expression
@@ -29,9 +29,7 @@ def p_expression(p):
     elif p[2] == "-": p[0] = p[1] - p[3]
     elif p[2] == "*": p[0] = p[1] * p[3]
     elif p[2] == "/": p[0] = p[1] / p[3]
-
-def p_empty(p):
-    print("empty")
+    elif p[2] == "^": p[0] = p[1] ** p[3]
 
 def p_error(p):
     print("error", p)

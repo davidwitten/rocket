@@ -14,7 +14,8 @@ namespace = {}
 
 # Lex
 lex.lex()
-s = "1+5*-3.24"
+s = "-5^-2"
+
 lex.input(s)
 
 # Yacc
