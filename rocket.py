@@ -2,23 +2,43 @@
 # David Witten, Noah Kim
 
 # Import
+import re
 import fractions
-from ply import lex
-from ply import yacc
 
-from rocketlex import *
-from rocketyacc import *
+# Lexer
+tokens = {
+    "NUMBER": r"([0-9]*\.[0-9]+|[0-9]+)",
+    "PLUS": r"\+",
+    "MINUS": r"-",
+    "TIMES": r"\*",
+    "DIVIDE": r"/",
+    "IGNORE": r"\s+",
+}
 
-# Setup
-namespace = {}
+class Token:
+    """Token container class."""
+    
+    def __init__(self, name, value):
+        """Initialize a new token."""
+        self.name = name
+        self.value = value
 
-# Lex
-lex.lex()
-s = "1+5*-3.24"
-lex.input(s)
+    def __repr__(self):
+        """Representation of a token."""
+        return "%s:%s" % (self.name, self.value)
 
-# Yacc
-yacc.yacc()
-result = yacc.parse()
-print(result)
-
+def tokenize(tokens, string):
+    """Seperate the string into a list of token objects."""
+    tokenized = []
+    while string:
+        for name, pattern in tokens.items():
+            match = re.match("^"+pattern, string)
+            if match:
+                value = string[match.start():match.end()]
+                tokenized.append(Token(name, value))                
+                string = string[match.end():]
+                break
+        else:
+            tokenized.append(Token("ERROR", value))
+            string = string[1:]
+    return tokenized
