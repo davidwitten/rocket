@@ -34,7 +34,7 @@ t_QUESTION = r"\?"
 t_EXCLAMATION = r"!"
 t_COLON = r":"
 t_SEMI = r";"
-t_PERIOD = "."
+t_PERIOD = r"\."
 t_COMMA = r","
 
 t_PLUS = r"\+"

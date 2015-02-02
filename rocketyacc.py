@@ -13,12 +13,9 @@ precedence = (
     ("right", "UMINUS"),
 )
 
-def p_uminus(p):
-    """expression : MINUS expression %prec UMINUS"""
-    p[0] = -p[2]
-
 def p_expression(p):
     """expression : NUMBER
+                  | MINUS NUMBER %prec UMINUS
                   | LPAREN expression RPAREN
                   | expression PLUS expression
                   | expression MINUS expression
@@ -26,11 +23,15 @@ def p_expression(p):
                   | expression DIVIDE expression
     """
     if len(p) == 2: p[0] = p[1]
+    elif len(p) == 3: p[0] = -p[2]
     elif p[1] == "(": p[0] = p[2]
     elif p[2] == "+": p[0] = p[1] + p[3]
     elif p[2] == "-": p[0] = p[1] - p[3]
     elif p[2] == "*": p[0] = p[1] * p[3]
     elif p[2] == "/": p[0] = p[1] / p[3]
+
+def p_empty(p):
+    print("empty")
 
 def p_error(p):
     print("error", p)
