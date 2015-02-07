@@ -6,7 +6,7 @@ import fractions
 from rocketlex import *
 
 # Namespace
-namespace = {}
+namespace = {"a": fractions.Fraction("1/2")}
 
 # Main
 precedence = (
@@ -22,8 +22,9 @@ def p_statement_assignment(p):
     pass
 
 def p_assignment(p):
-    """assignment : VARIABLE COLON expression SEMI"""
+    """assignment : VARIABLE COLON expression"""
     namespace[p[1]] = p[3]
+    p[0] = p[3]
 
 def p_statement_expression(p):
     """statement : expression"""
@@ -32,6 +33,10 @@ def p_statement_expression(p):
 def p_expression_number(p):
     """expression : NUMBER"""
     p[0] = p[1]
+
+def p_expression_variable(p):
+    """expression : VARIABLE"""
+    p[0] = namespace[p[1]]
 
 def p_expression_parenthesis(p):
     """expression : LPAREN expression RPAREN"""
@@ -55,6 +60,10 @@ def p_expression_binary(p):
     elif p[2] == "/": p[0] = p[1] / p[3]
     elif p[2] == "+": p[0] = p[1] + p[3]
     elif p[2] == "-": p[0] = p[1] - p[3]
+
+def p_statement_print(p):
+    """statement : BACKSLASH expression"""
+    print(p[2])
 
 def p_error(p):
     print("error", p)
