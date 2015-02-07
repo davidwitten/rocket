@@ -11,7 +11,7 @@ from rocketyacc import *
 
 # Lex
 lex.lex()
-s = "a: -5^-2"
+s = "a: -5^-2;"
 
 lex.input(s)
 

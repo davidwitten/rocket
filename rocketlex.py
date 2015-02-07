@@ -12,7 +12,7 @@ tokens = [
     "BACKSLASH", "QUESTION", "EXCLAMATION",
     "COLON", "SEMI", "PERIOD", "COMMA",
 
-    "PLUS", "MINUS", "TIMES", "DIVIDE", "MOD", "POWER", "DOLLAR",
+    "PLUS", "MINUS", "TIMES", "DIVIDE", "MODULUS", "POWER", "DOLLAR",
     "EQUALS", "GREATER", "LESS", "AND", "OR", "NOT",
 
     "LPAREN", "RPAREN", "LBRACKET", "RBRACKET", "LBRACE", "RBRACE",
@@ -41,7 +41,7 @@ t_PLUS = r"\+"
 t_MINUS = r"-"
 t_TIMES = r"\*"
 t_DIVIDE = r"/"
-t_MOD = r"%"
+t_MODULUS = r"%"
 t_POWER = r"\^"
 t_DOLLAR = r"\$"
 t_EQUALS = r"="
