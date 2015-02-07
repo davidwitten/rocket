@@ -1,38 +1,69 @@
-rocket
+Rocket
 ======
 
-A state-of-the-art, revolutionary algorithmic language, it incorporates next-level syntax, inspiring innovation.
-It is changing the world one program at a time.
+About
+-----
+A revolutionary new programming language oriented towards learning algorithms.
 
 Syntax
---------
-      ! : output
-      ? : input
-      @ : load (with variable) (_variable to denote list)
+------
 
-      + : addition
-      - : subtraction
-      * : multiplication
-      / : division
-      % : modulus
-      ^ : exponentiation
+Comments
+	
+	# Comment
 
-      $ : while-loop
-      ~ : if-statement
-      
-      LIST:
-      & : add element
-      | : sorted list
+Input and Output
+	
+	\<a-zA-Z>  # Outputs variable to stream
+	           # Starting variables can be initialized on program execution
+	
+Literals
+	
+	1, 1.00    # Number
+	[1, 2.00]  # List
 
-Opinions
---------
-"This language is nasty"- Everyone
+Variables
 
-"I should use this instead of Python"- Arman S.
+	<a-z>  # Number variables 1
+	<A-Z>  # List variables [1, 2, 3]
 
-Credits
--------
+Identity Operations
 
-Created by: 
-* Noah K @noahbkim
-* David W @dwizard
+	<a-zA-Z>:<expression>  # Set number or list to expression
+	<a-zA-Z>               # Get number or list 
+	A.b:<expression>       # Set list element at index b to expression
+	A.b                    # Get list element at index b
+
+Number Operations
+
+	+  # Add
+	-  # Subtract
+	*  # Multiply
+	/  # Divide
+	%  # Modulus
+	^  # Power
+
+List Operations
+
+	$  # Length
+
+Comparisons
+
+	=  # Equal 
+	>  # Greater
+	<  # Less
+
+Boolean
+
+	&  # And
+	|  # Or
+	~  # Not
+
+Grouping
+
+	(<Expression>)  # Higher precedence operation
+
+Control
+
+	?(<expression>){}  # If
+	!(<expression>){}  # While
