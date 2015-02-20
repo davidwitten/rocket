@@ -3,3 +3,4 @@ parsetab.py
 *.pyc
 *.pyo
 __pycache__/
+*/__pycache__/
