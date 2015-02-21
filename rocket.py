@@ -1,28 +1,35 @@
 # Rocket
 # David Witten, Noah Kim
 
-
 # Import
 import fractions
 from ply import lex
 from ply import yacc
 
-
-# Set up
+# Namespace
 namespace = {}
 
+# Fractions
+def nice(fraction):
+    """Get the nice value of a fraction."""
+    value = fraction._numerator / fraction._denominator
+    return str(int(value) if int(value) == value else value)
+fractions.Fraction.__repr__ = nice
+    
 # Lexer
 tokens = [
     "COMMENT", "NUMBER", "VARIABLE",
-    
     "BACKSLASH", "QUESTION", "EXCLAMATION",
     "COLON", "SEMI", "PERIOD", "COMMA",
-
-    "PLUS", "MINUS", "TIMES", "DIVIDE", "MODULUS", "POWER", "DOLLAR",
+    "PLUS", "MINUS", "TIMES", "DIVIDE", "MODULUS", "POWER", "AT", "DOLLAR",
     "EQUALS", "GREATER", "LESS", "AND", "OR", "NOT",
-
     "LPAREN", "RPAREN", "LBRACKET", "RBRACKET", "LBRACE", "RBRACE",
 ]
+
+# Errors
+LEX_INVALID_CHAR = "Lexer Error: Invalid character '%s' at index %i on line %i"
+PARSE_INVALID_VAR = "Parser Error: Variable '%s' does not exist."
+PARSE_INVALID_SYNTAX = "Parser Error: Invalid syntax at line %i"
 
 def t_COMMENT(t):
     r"\#.*"
@@ -49,6 +56,7 @@ t_TIMES = r"\*"
 t_DIVIDE = r"/"
 t_MODULUS = r"%"
 t_POWER = r"\^"
+t_AT = r"@"
 t_DOLLAR = r"\$"
 t_EQUALS = r"="
 t_GREATER = r"<"
@@ -69,13 +77,13 @@ def t_newline(t):
     t.lexer.lineno += len(t.value)
 
 def t_error(t):
-    print("invalid character %s" % t.value)
+    print(LEX_INVALID_CHAR % (t.value, t.lexpos, t.lineno))
+    t.lexer.exitcode = 1
     t.lexer.skip(1)
 
 t_ignore = " \t"
 
 lex.lex()
-
 
 # Parser
 precedence = (
@@ -111,10 +119,18 @@ def p_items_item(p):
     """expressions : expressions COMMA expression
                    | expression"""
     if len(p) == 2: p[0] = [p[1]]
-    else: p[0] = p[1] + [p[2]]
+    else: p[0] = p[1] + [p[3]]
+
+def p_expression_list_get(p):
+    """expression : expression AT NUMBER"""
+    p[0] = p[1][int(p[3])]
 
 def p_expression_variable(p):
     """expression : VARIABLE"""
+    value = namespace.get(p[1])
+    if value == None:
+        print(PARSE_INVALID_VAR % p[1])
+        return
     p[0] = namespace[p[1]]
 
 def p_expression_parenthesis(p):
@@ -145,7 +161,7 @@ def p_statement_print(p):
     print(p[2])
 
 def p_error(p):
-    print("error", p)
+    if p is not None: print(PARSE_INVALID_SYNTAX)
 
 yacc.yacc()
 
@@ -155,7 +171,9 @@ while True:
     s = input("> ")
     if s == "quit": break
     for line in s.split(";"):
+        lex.exitcode = 0
         lex.input(line)
-        result = yacc.parse(lexer=lex)
-        if result is not None: print(result)
-
+        if lex.exitcode == 0:
+            result = yacc.parse(lexer=lex)
+            if result is not None: print(result)
+        
