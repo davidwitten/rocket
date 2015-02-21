@@ -37,7 +37,7 @@ def t_NUMBER(t):
     t.value = fractions.Fraction(t.value)
     return t
 
-t_VARIABLE = r"[a-zA-Z][a-zA-Z0-9]*"
+t_VARIABLE = r"[a-zA-Z_][a-zA-Z0-9_]*"
 
 t_COLON = r":"
 t_SEMI = r";"

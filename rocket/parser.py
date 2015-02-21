@@ -84,7 +84,7 @@ def p_expression_unary(p):
     elif p[1] == "~": p[0] = int(not p[2])
     elif p[1] == "$":
         if type(p[2]) != list: print(INCORRECT_TYPE % ("$", "List"))
-        else: p[0] = list(sorted(p[2]))
+        else: p[0] = len(p[2])
 
 def p_expression_math(p):
     """expression : expression POWER expression

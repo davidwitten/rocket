@@ -3,7 +3,7 @@ Rocket
 
 About
 -----
-A revolutionary new programming language oriented towards learning algorithms.
+Rocket is a revolutionary new programming language oriented towards learning algorithms.
 
 Syntax
 ------
@@ -14,25 +14,26 @@ Comments
 
 Input and Output
 	
-	\<a-zA-Z>  # Outputs variable to stream
-	           # Starting variables can be initialized on program execution
+	1;  # Statements containing single expressions are printed
+	    # Outputs `1`
 	
 Literals
 	
-	1, 1.00    # Number
-	[1, 2.00]  # List
+	1; 1.00;    # Number
+	[1, 2.00];  # List
 
-Variables
+Variables and Operations
 
-	<a-z>  # Number variables 1
-	<A-Z>  # List variables [1, 2, 3]
-
-Identity Operations
-
-	<a-zA-Z>:<expression>  # Set number or list to expression
-	<a-zA-Z>               # Get number or list 
-	A.b:<expression>       # Set list element at index b to expression
-	A.b                    # Get list element at index b
+	number: 1.00;     # Set number or list to expression
+	                  # `number` is now `1`
+	number;           # Get number or list
+	                  # Outputs `1`
+	                  
+	list: [1, 2.00];
+	list@1:3;         # Set list element at index b to expression
+	                  # `list` is now `[1, 3]`
+	list@1;           # Get list element at index b
+	                  # Outputs `3`
 
 Number Operations
 
