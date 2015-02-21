@@ -11,6 +11,7 @@ def __nice__(fraction):
     value = fraction._numerator / fraction._denominator
     return str(int(value) if int(value) == value else value)
 fractions.Fraction.__repr__ = __nice__
+fractions.Fraction.__str__ = __nice__
 
 # Errors
 INVALID_CHAR = "Lexer Error: Invalid character '%s' at index %i"
@@ -74,7 +75,6 @@ def t_newline(t):
 
 def t_error(t):
     print(INVALID_CHAR % (t.value, t.lexpos))
-    t.lexer.exitcode = 1
     t.lexer.skip(1)
 
 t_ignore = " \t"

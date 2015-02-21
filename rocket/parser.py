@@ -9,8 +9,9 @@ from rocket.lexer import tokens
 namespace = {}
 
 # Errors
-INVALID_VARIABLE = "Parser Error: Variable '%s' does not exist."
+INVALID_VARIABLE = "Parser Error: Variable '%s' does not exist"
 INVALID_SYNTAX = "Parser Error: Invalid syntax '%s'"
+INCORRECT_TYPE = "Parser Error: Operator '%s' requires type %s"
 
 # Precedence
 precedence = (
@@ -43,7 +44,8 @@ def p_assignment(p):
 
 def p_statement_expression(p):
     """statement : expression"""
-    print(p[1])
+    p[0] = p[1]
+    if p[0] is not None: print(p[0])
 
 def p_expression_number(p):
     """expression : NUMBER"""
@@ -76,9 +78,13 @@ def p_expression_parenthesis(p):
 
 def p_expression_unary(p):
     """expression : MINUS expression %prec NEGATE
-                  | NOT expression"""
+                  | NOT expression
+                  | DOLLAR expression"""
     if p[1] == "-": p[0] = -p[2]
     elif p[1] == "~": p[0] = int(not p[2])
+    elif p[1] == "$":
+        if type(p[2]) != list: print(INCORRECT_TYPE % ("$", "List"))
+        else: p[0] = list(sorted(p[2]))
 
 def p_expression_math(p):
     """expression : expression POWER expression
