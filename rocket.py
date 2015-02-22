@@ -17,11 +17,12 @@ ply.yacc.yacc(module=rocket.parser, debug=0)
 ply.yacc.parser = ply.yacc
 
 # File
-if len(sys.argv) == 2:
-    with open(sys.argv[1]) as file:
+def run(path):
+    with open(path) as file:
         code = file.read()
     ply.lex.input(code)
-    ply.yacc.parse(lexer=ply.lex, tracking=1)
+    result = ply.yacc.parse(lexer=ply.lex, tracking=1)
+    return result
 
 # Main
 def shell():
@@ -30,4 +31,5 @@ def shell():
         if s == "quit": break
         if s and not s.endswith(";"): s += ";"
         ply.lex.input(s)
-        result = ply.yacc.parse(lexer=ply.lex)
+        ast = ply.yacc.parse(lexer=ply.lex)
+        print(ast)

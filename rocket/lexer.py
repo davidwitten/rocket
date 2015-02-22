@@ -4,6 +4,7 @@
 
 # Import
 import fractions
+import rocket.errors
 
 # Tweaks
 def __nice__(fraction):
@@ -13,16 +14,13 @@ def __nice__(fraction):
 fractions.Fraction.__repr__ = __nice__
 fractions.Fraction.__str__ = __nice__
 
-# Errors
-INVALID_CHAR = "Lexer Error: Invalid character '%s' at index %i on line %i"
-
 # Token List
 tokens = [
     "COMMENT", 
     "NUMBER", "VARIABLE",
     "QUESTION", "EXCLAMATION",
     "COLON", "SEMI", "COMMA",
-    "PLUS", "MINUS", "TIMES", "DIVIDE", "MODULUS", "POWER", "AT", "DOLLAR",
+    "ADD", "SUBTRACT", "MULTIPLY", "DIVIDE", "MODULUS", "POWER", "AT", "DOLLAR",
     "EQUALS", "GREATER", "LESS", "AND", "OR", "NOT",
     "LPAREN", "RPAREN", "LBRACKET", "RBRACKET", "LBRACE", "RBRACE",
 ]
@@ -45,9 +43,9 @@ t_COMMA = r","
 t_QUESTION = r"\?"
 t_EXCLAMATION = r"!"
 
-t_PLUS = r"\+"
-t_MINUS = r"-"
-t_TIMES = r"\*"
+t_ADD= r"\+"
+t_SUBTRACT = r"-"
+t_MULTIPLY = r"\*"
 t_DIVIDE = r"/"
 t_MODULUS = r"%"
 t_POWER = r"\^"
@@ -74,7 +72,7 @@ def t_newline(t):
     t.lexer.lineno += len(t.value)
 
 def t_error(t):
-    print(INVALID_CHAR % (t.value[0], t.lexpos, t.lineno))
+    print(" % (t.value[0], t.lexpos, t.lineno))
     t.lexer.skip(1)
 
 t_ignore = " \t"
