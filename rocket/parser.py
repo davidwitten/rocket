@@ -11,7 +11,11 @@ namespace = {}
 # Errors
 INVALID_VARIABLE = "Parser Error: Variable '%s' does not exist"
 INVALID_SYNTAX = "Parser Error: Invalid syntax '%s'"
-INCORRECT_TYPE = "Parser Error: Operator '%s' requires type %s"
+INVALID_OPERAND = "Parser Error: Operator '%s' requires operand%s type %s"
+BAD_INDEX = "Parser Error: Index out of range of list"
+
+# List
+
 
 # Precedence
 precedence = (
@@ -22,7 +26,8 @@ precedence = (
     ("left", "PLUS", "MINUS"),
     ("left", "TIMES", "DIVIDE"),
     ("left", "MODULUS"),
-    ("right", "NEGATE", "NOT"),
+    ("left", "AT"),
+    ("right", "NEGATE", "NOT", "DOLLAR"),
     ("left", "POWER"),
 )
 
@@ -38,9 +43,13 @@ def p_statement_assignment(p):
     pass
 
 def p_assignment(p):
-    """assignment : VARIABLE COLON expression"""
-    namespace[p[1]] = p[3]
-    p[0] = p[3]
+    """assignment : VARIABLE COLON expression
+                  | VARIABLE AT expression COLON expression"""
+    if len(p) == 4:
+        namespace[p[1]] = p[3]
+        p[0] = p[3]
+    elif len(p) == 6:
+        for x in p: print(x)
 
 def p_statement_expression(p):
     """statement : expression"""
@@ -51,21 +60,25 @@ def p_expression_number(p):
     """expression : NUMBER"""
     p[0] = p[1]
 
-def p_expression_expressions(p):
-    """expression : LBRACKET expressions RBRACKET"""
-    p[0] = p[2]
-
-def p_expressions(p):
-    """expressions : expressions COMMA expression
-                   | expression
+def p_expression_list(p):
+    """expression : LBRACKET list RBRACKET
+                  | LBRACKET RBRACKET"""
+    if len(p) == 4: p[0] = p[2]
+    elif len(p) == 3: p[0] = []
+    
+def p_list(p):
+    """list : list COMMA expression
+            | expression 
     """
     if len(p) == 2: p[0] = [p[1]]
     else: p[0] = p[1] + [p[3]]
 
-def p_expression_list_get(p):
-    """expression : expression AT NUMBER"""
-    p[0] = p[1][int(p[3])]
-
+def p_expression_list_index(p):
+    """expression : expression AT expression"""
+    if type(p[1]) != list or p[3] != int(p[3]):
+        print(INVALID_OPERAND % ("@", "s", "List, Integer")) 
+    else: p[0] = p[1][int(p[3])]
+    
 def p_expression_variable(p):
     """expression : VARIABLE"""
     value = namespace.get(p[1])
@@ -83,7 +96,7 @@ def p_expression_unary(p):
     if p[1] == "-": p[0] = -p[2]
     elif p[1] == "~": p[0] = int(not p[2])
     elif p[1] == "$":
-        if type(p[2]) != list: print(INCORRECT_TYPE % ("$", "List"))
+        if type(p[2]) != list: print(INVALID_OPERAND % ("$", "", "List"))
         else: p[0] = len(p[2])
 
 def p_expression_math(p):

@@ -13,14 +13,14 @@ namespace = {}
 
 # Build
 ply.lex.lex(module=rocket.lexer)
-ply.yacc.yacc(module=rocket.parser, debug=0)
+ply.yacc.yacc(module=rocket.parser, debug=0) 
 
 # File
 if len(sys.argv) == 2:
     with open(sys.argv[1]) as file:
         code = file.read()
     ply.lex.input(code)
-    ply.yacc.parse(lexer=ply.lex)
+    ply.yacc.parse(lexer=ply.lex, tracking=1)
 
 # Main
 def shell():
