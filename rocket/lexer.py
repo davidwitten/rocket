@@ -14,7 +14,7 @@ fractions.Fraction.__repr__ = __nice__
 fractions.Fraction.__str__ = __nice__
 
 # Errors
-INVALID_CHAR = "Lexer Error: Invalid character '%s' at index %i"
+INVALID_CHAR = "Lexer Error: Invalid character '%s' at index %i on line %i"
 
 # Token List
 tokens = [
@@ -74,7 +74,7 @@ def t_newline(t):
     t.lexer.lineno += len(t.value)
 
 def t_error(t):
-    print(INVALID_CHAR % (t.value, t.lexpos))
+    print(INVALID_CHAR % (t.value[0], t.lexpos, t.lineno))
     t.lexer.skip(1)
 
 t_ignore = " \t"

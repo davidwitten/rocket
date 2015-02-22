@@ -13,7 +13,8 @@ namespace = {}
 
 # Build
 ply.lex.lex(module=rocket.lexer)
-ply.yacc.yacc(module=rocket.parser, debug=0) 
+ply.yacc.yacc(module=rocket.parser, debug=0)
+ply.yacc.parser = ply.yacc
 
 # File
 if len(sys.argv) == 2:
@@ -27,6 +28,6 @@ def shell():
     while True:
         s = input("> ")
         if s == "quit": break
-        if not s.endswith(";"): s += ";"
+        if s and not s.endswith(";"): s += ";"
         ply.lex.input(s)
         result = ply.yacc.parse(lexer=ply.lex)
